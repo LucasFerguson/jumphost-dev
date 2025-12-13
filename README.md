@@ -18,3 +18,6 @@ curl -X POST -H 'Content-Type: application/json' \
     "https://api.digitalocean.com/v2/droplets"
 ```
 
+curl -fsSL https://pkgs.netbird.io/install.sh | sh
+
+netbird up

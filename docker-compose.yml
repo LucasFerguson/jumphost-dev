@@ -1,0 +1,27 @@
+services:
+  traefik:
+    image: traefik:v3.3
+    container_name: traefik
+    restart: unless-stopped
+
+    # Option A (recommended for NetBird DNS reliability):
+    # Use host networking so Traefik uses the host’s NetBird interface and DNS behavior directly.
+    # Note: in host mode you must REMOVE the `ports:` section, since Docker ignores it.
+    network_mode: host
+
+    # If you prefer bridge networking, remove `network_mode: host` and use ports:
+    # ports:
+    #   - "80:80"
+    #   - "25565:25565/tcp"
+    #   - "19132:19132/udp"
+    #   - "8080:8080"
+
+    volumes:
+      # Static config (install configuration)
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+
+      # Dynamic config directory (routers/services)
+      - ./dynamic:/etc/traefik/dynamic:ro
+
+      # Optional log directory (if you log to files)
+      - ./logs:/var/log/traefik

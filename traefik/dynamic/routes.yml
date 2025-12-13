@@ -1,0 +1,57 @@
+# /opt/traefik/dynamic/routes.yml
+# This is Traefik's DYNAMIC config (routing config).
+# It defines routers and services.
+
+http:
+  routers:
+    n8n:
+      entryPoints:
+        - web
+      rule: "Host(`n8n.lucaslad.dev`)"
+      service: n8n_svc
+      # No TLS yet as requested.
+      # Later you will add a websecure entrypoint and a certResolver.
+
+  services:
+    n8n_svc:
+      loadBalancer:
+        servers:
+          - url: "http://n8n.netbird.cloud:5678"
+        passHostHeader: true
+        # passHostHeader is usually what you want for apps behind a proxy.
+
+tcp:
+  routers:
+    minecraft_java:
+      entryPoints:
+        - minecraft
+      rule: "HostSNI(`*`)"
+      service: mc_java_svc
+      tls: false
+      # IMPORTANT:
+      # HostSNI(`*`) is used because Minecraft Java is not doing TLS+SNI.
+      # That means any TCP connection hitting :25565 will go to this backend.
+      # If you want multiple Java servers on different hostnames, you generally need:
+      # - different ports, OR
+      # - a Minecraft proxy like Velocity/Bungee.
+
+  services:
+    mc_java_svc:
+      loadBalancer:
+        servers:
+          - address: "crafty-controller.netbird.cloud:25565"
+
+udp:
+  routers:
+    minecraft_bedrock:
+      entryPoints:
+        - bedrock
+      service: mc_bedrock_svc
+      # UDP routers do not have host rules.
+      # All UDP packets on :19132 will go to this backend.
+
+  services:
+    mc_bedrock_svc:
+      loadBalancer:
+        servers:
+          - address: "crafty-controller.netbird.cloud:19132"

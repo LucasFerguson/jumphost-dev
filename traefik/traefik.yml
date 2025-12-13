@@ -1,0 +1,43 @@
+# /opt/traefik/traefik.yml
+# This is Traefik's STATIC config (install config).
+# It defines entrypoints, providers, logging, and the dashboard.
+
+api:
+  dashboard: true
+  insecure: false
+  # Insecure means the dashboard is open on :8080 with no auth.
+  # Fine for early testing; however, lock this down later.
+
+entryPoints:
+  web:
+    address: ":80"
+    # HTTP traffic for your websites and dashboards.
+
+  minecraft:
+    address: ":25565"
+    # Minecraft Java uses raw TCP on 25565.
+
+  bedrock:
+    address: ":19132/udp"
+    # Minecraft Bedrock uses UDP on 19132.
+
+  traefik:
+    address: ":8080"
+    # Traefik dashboard/API when api.insecure=true.
+
+providers:
+  file:
+    directory: "/etc/traefik/dynamic"
+    watch: true
+    # watch=true means you can edit dynamic YAML and Traefik reloads without restart.
+
+log:
+  level: DEBUG
+  # DEBUG mode: very chatty, great while building.
+  # Later you can drop to INFO.
+
+accessLog:
+  # Access logs show traffic info. For TCP/UDP this is more limited than HTTP,
+  # but it is still useful to confirm connections are hitting the right entrypoint.
+  format: json
+  filePath: "/var/log/traefik/access.log"
