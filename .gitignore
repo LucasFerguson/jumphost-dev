@@ -1,0 +1,32 @@
+# root@ubuntu # eza --tree --level 3
+# .
+# ├── 00-install-fish.sh
+# ├── 01-system-prereqs.sh
+# ├── 02-install-docker.sh
+# ├── 03-ufw-firewall.sh
+# ├── 04-ufw-disable.sh
+# ├── 05-set-folder-perms.sh
+# ├── dynamic
+# ├── logs
+# ├── README.md
+# ├── traefik
+# │  ├── docker-compose.observability.yml
+# │  ├── docker-compose.yml
+# │  ├── dynamic
+# │  │  └── routes.yml
+# │  ├── logs
+# │  │  └── access.log
+# │  ├── observability
+# │  │  ├── grafana
+# │  │  ├── loki
+# │  │  ├── otel
+# │  │  ├── prometheus
+# │  │  └── promtail
+# │  └── traefik.yml
+# └── traefik.yml
+
+traefik/observability/grafana/data/*
+traefik/observability/loki/data/*
+traefik/observability/prometheus/data/*
+traefik/logs/access.log
+logs/*

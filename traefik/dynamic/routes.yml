@@ -1,4 +1,4 @@
-# /opt/traefik/dynamic/routes.yml
+# /traefik/dynamic/routes.yml
 # This is Traefik's DYNAMIC config (routing config).
 # It defines routers and services.
 
@@ -11,6 +11,11 @@ http:
       service: n8n_svc
       # No TLS yet as requested.
       # Later you will add a websecure entrypoint and a certResolver.
+    traefik_dashboard:
+      entryPoints:
+        - traefik
+      rule: "PathPrefix(`/`)"
+      service: api@internal
 
   services:
     n8n_svc:

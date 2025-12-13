@@ -25,6 +25,21 @@ entryPoints:
     address: ":8080"
     # Traefik dashboard/API when api.insecure=true.
 
+  metrics:
+    address: ":9100"  # NetBird-only via UFW
+
+metrics:
+  prometheus:
+    entryPoint: metrics
+    addEntryPointsLabels: true
+    addRoutersLabels: true
+    addServicesLabels: true
+
+tracing:
+  otlp:
+    http:
+      endpoint: "http://127.0.0.1:4318/v1/traces"
+
 providers:
   file:
     directory: "/etc/traefik/dynamic"
