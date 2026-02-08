@@ -4,6 +4,8 @@ set -euo pipefail
 echo "[setup] Installing fish shell"
 
 sudo apt update
+sudo apt upgrade
+
 sudo apt install -y fish
 
 FISH_PATH="$(command -v fish || true)"

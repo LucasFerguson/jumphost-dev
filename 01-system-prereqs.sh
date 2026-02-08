@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "[docker_setup] Updating apt and installing prerequisites"
+echo "[dev_env] Updating apt and installing prerequisites"
 
 sudo apt update
 
