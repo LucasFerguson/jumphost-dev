@@ -14,11 +14,11 @@ def run_diagnostics(name, ip):
     param = '-n' if platform.system().lower() == 'windows' else '-c'
     
     # Simple Ping
-    try:
-        ping = subprocess.check_output(['ping', param, '3', ip]).decode('utf-8')
-        print("Ping: Success")
-    except:
-        print("Ping: Failed")
+    # try:
+    #     ping = subprocess.check_output(['ping', param, '3', ip]).decode('utf-8')
+    #     print("Ping: Success")
+    # except:
+    #     print("Ping: Failed")
 
     # Quick Traceroute (limited to 10 hops for speed)
     trace_cmd = 'tracert' if platform.system().lower() == 'windows' else 'traceroute'
